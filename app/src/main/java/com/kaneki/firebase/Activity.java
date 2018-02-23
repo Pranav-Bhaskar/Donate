@@ -3,9 +3,11 @@ package com.kaneki.firebase;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.text.method.ScrollingMovementMethod;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 
@@ -37,8 +39,13 @@ public class Activity extends AppCompatActivity {
                     double value = Double.parseDouble(E.getText().toString());
                     if (value < 100)
                         setContentView(R.layout.fitdiabetes);
-                    else
+                    else {
                         setContentView(R.layout.diabetes);
+                        TextView textView = (TextView) findViewById(R.id.db_tv_3);
+                        textView.setMovementMethod(new ScrollingMovementMethod());
+
+                    }
+
                 }
             }
         });
@@ -61,25 +68,36 @@ public class Activity extends AppCompatActivity {
                 }
 
                 else{
-                double v = Double.parseDouble( height.getText().toString());
+                    double v = Double.parseDouble( height.getText().toString());
 
-                double z = Double.parseDouble( weight.getText().toString());
-                if(v>=0&&z>=0) {
+                    double z = Double.parseDouble( weight.getText().toString());
+                    if(v>=0&&z>=0) {
 
-                    bmi = z / (v*v) ;
-                    if (bmi >= 25)
-                        setContentView(R.layout.overweight);
-                    else if (bmi <= 19)
-                        setContentView(R.layout.underweight);
-                    else if (bmi > 19 && bmi < 25)
-                        setContentView(R.layout.fitbmi);
+                        bmi = z / (v*v) ;
+                        if (bmi >= 25) {
+                            setContentView(R.layout.overweight);
+                            TextView ow_tv_1 =(TextView) findViewById(R.id.ow_tv_1) ;
+                            ow_tv_1.setText("BMI: "+z);
+                            TextView textView = (TextView) findViewById(R.id.ow_tv_2);
+                            textView.setMovementMethod(new ScrollingMovementMethod());
+                        }
 
-                }
+                        else if (bmi <= 19){
+                            setContentView(R.layout.underweight);
+                            TextView uw_tv_1 =(TextView) findViewById(R.id.uw_tv_1) ;
+                            uw_tv_1.setText("BMI: "+z);
+                            TextView textView = (TextView) findViewById(R.id.uw_tv_2);
+                            textView.setMovementMethod(new ScrollingMovementMethod());
+
+                        }
+                        else
+                            setContentView(R.layout.fitbmi);
+
+                    }
                 }
 
             }
         });
-
 
     }
 }
